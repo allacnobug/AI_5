@@ -32,6 +32,7 @@ class config:
     fuse_model_type = '1'
 
     bert_name = 'bert-base-uncased'
+    text_model = 'bert-base-uncased'
     bert_learning_rate = 5e-6
     bert_dropout = 0.2
 
@@ -49,8 +50,9 @@ class config:
 
 # 参数
 parser = argparse.ArgumentParser()
-parser.add_argument('--train', action='store_true', default=True, help='训练')
-parser.add_argument('--test', action='store_true', default=False, help='测试')
+parser.add_argument('--train', action='store_true', default=False, help='训练')
+parser.add_argument('--test', action='store_true', default=True, help='测试')
+parser.add_argument('--valid', action='store_true', default=False, help='验证')
 
 parser.add_argument('--text_model', default='bert-base-uncased', help='文本分析模型', type=str)
 parser.add_argument('--model_type', default='5', help='模型类别', type=str)
@@ -132,27 +134,25 @@ def test():
 
 # main
 if __name__ == "__main__":
-    for i in range(3, 6):
-        config.model_type = str(i)
-        print(config.model_type)
-        if config.model_type == '1':
-            from Models.model1 import Model
-        elif config.fuse_model_type == '2':
-            from Models.model2 import Model
-        elif config.fuse_model_type == '3':
-            from Models.model3 import Model
-        elif config.fuse_model_type == '4':
-            from Models.model4 import Model
-        else:
-            from Models.model5 import Model
+    print(config.model_type)
+    if config.model_type == '1':
+        from Models.model1 import Model
+    elif config.fuse_model_type == '2':
+        from Models.model2 import Model
+    elif config.fuse_model_type == '3':
+        from Models.model3 import Model
+    elif config.fuse_model_type == '4':
+        from Models.model4 import Model
+    else:
+        from Models.model5 import Model
 
-        model = Model(config)
-        device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
-        trainer = Trainer(config, processor, model, device)
+    model = Model(config)
+    device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
+    trainer = Trainer(config, processor, model, device)
+
+    if args.train:
         train()
-
-
-    # if args.train:
-    #     train()
-    # if args.test:
-    #     test()
+    if args.test:
+        test()
+    if args.valid:
+        valid()
