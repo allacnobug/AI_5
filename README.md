@@ -43,17 +43,17 @@
 
 仅用文本：
 
-        python your_script.py --valid --text
+        python main.py --valid --text
         
 仅用图像：
 
-        python your_script.py --valid --img
+        python main.py --valid --img
         
 其他参数
 
     --load_model_path：如果你有一个已经训练好的模型，可以通过此参数加载模型，例如：
     
-        python your_script.py --test --model_type 5 --load_model_path /path/to/you
+        python main.py --test --model_type 5 --load_model_path /path/to/you
         
 ## Attribution
 Parts of this code are based on the following repositories:
