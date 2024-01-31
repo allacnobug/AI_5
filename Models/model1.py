@@ -117,8 +117,8 @@ class Model(nn.Module):
             nn.Softmax(dim=1)
         )
 
-        # 交叉熵损失函数，带有权重
-        self.loss_func = nn.CrossEntropyLoss()
+        # 交叉熵损失函数
+        self.loss_func = nn.CrossEntropyLoss(weight=torch.tensor(config.loss_weight))
 
     def forward(self, texts, texts_mask, imgs, labels=None):
         # 获取文本特征
